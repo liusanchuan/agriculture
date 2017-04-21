@@ -1,0 +1,85 @@
+﻿<Window x:Class="_3c_tcp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="上位机" Height="477" Width="794"
+        Loaded="Window_Loaded" ResizeMode="CanResize" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <DockPanel Margin="0,0,5,0" Height="469" VerticalAlignment="Top">
+        <GroupBox Header="显示区" DockPanel.Dock="Right" Width="550" Name="Group_show" Height="444" VerticalAlignment="Top">
+            <DockPanel Margin="0,0,0,0" >
+
+                <RichTextBox DockPanel.Dock="Top"  IsReadOnly="True" VerticalAlignment="Stretch" Margin="1,1,4,1"
+                           Name="tb_ConsoleOutPut" BorderBrush="Gray" Height="330"
+                     VerticalScrollBarVisibility="Auto"/>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="35" VerticalAlignment="Bottom">
+                    <Button Content="发送" Width="50" Click="btn_send" Margin="3"></Button>
+                    <Button Content="取消" Width="50" HorizontalAlignment="Right" Margin="3"/>
+                </StackPanel>
+
+                <TextBox Name="tb_Send"  BorderBrush="Gray" Height="50" VerticalAlignment="Bottom">
+
+                </TextBox>
+            </DockPanel>
+        </GroupBox >
+        <GroupBox Header="连接区" Margin="0,0,0,0" DockPanel.Dock="Top" Name="Group_Connect">
+            <StackPanel Width="194" DockPanel.Dock="Left" HorizontalAlignment="Left" >
+                <DockPanel Margin="3">
+                    <Label Width="50" DockPanel.Dock="Left">IP：</Label>
+                    <!--<TextBox Name="tb_ipAddress" >
+                    
+                </TextBox>-->
+                    <ComboBox   Name="comboBox_ip_list" SelectionChanged="listbox_ip_SelectionChanged">
+
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Margin="3">
+                    <Label Width="50" DockPanel.Dock="Left">端口：</Label>
+                    <TextBox Name="tb_port"/>
+                </DockPanel>
+                <WrapPanel>
+                    <Button Width="80" Margin="3" Click="Connect_Button_Click"
+                    Name="btn_connect">
+                        连接
+                    </Button>
+                    <Button Width="80" Margin="3" Click="Close_Btn_Clicked" IsEnabled="False" Name="btn_shut">
+                        断开
+                    </Button>
+                </WrapPanel>
+
+
+            </StackPanel>
+        </GroupBox>
+        <GroupBox  Width="230" Header="控制区" Padding="0,10">
+            <StackPanel>
+                <DockPanel>
+                    <Button Name="btn_dir_control" Click="btn_direction_Control" Content="控制方向"></Button>
+                    <Button Click="show_Direction" Content="显示"></Button>
+
+                </DockPanel>
+                <Canvas Height="130" Name="canvas1" IsEnabled="False">
+                    <Line Y2="100" X2="100" OpacityMask="#FFF30404"/>
+                    <Ellipse Width="100" Height="100" Canvas.Left="44" Canvas.Top="13" >
+                        <Ellipse.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="Black"/>
+                                <GradientStop Color="#FFF3EEEE" Offset="1"/>
+                                <GradientStop Color="#FFF08181" Offset="0.735"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse Width="25" Height="25" Canvas.Left="80" Canvas.Top="50" Name="DirControlRadio" KeyDown="DirControlRadio_KeyDown" >
+                        <Ellipse.Stroke>
+                            <ImageBrush/>
+                        </Ellipse.Stroke>
+                        <Ellipse.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFC8EC25" Offset="0.185"/>
+                                <GradientStop Color="#FF24E605" Offset="0.94"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Canvas>
+            </StackPanel>
+        </GroupBox>
+
+    </DockPanel>
+</Window>
