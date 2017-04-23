@@ -22,6 +22,39 @@ namespace _3c_tcp
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
+    public class Sql_Environment
+    {
+        static Environment_dataDataContext sql_env=null;
+        private Sql_Environment(){}
+        public static Environment_dataDataContext Create_Environment_SqlData() {
+            if (sql_env== null)
+            {
+                sql_env = new Environment_dataDataContext();
+            }
+            return sql_env;
+        }
+    }
+    public class Latast_data {
+        private  Latast_data() { }
+        private static Latast_data La_d=null;
+        public Double Temperature = 0;
+        public Double Humi = 0;
+        public String datatime = "";
+        public Double CO2 = 0;
+        public Double smokescope = 0;
+        public Double Light = 0;
+        public String WifiName = "";
+        public  static Latast_data getSingleon()
+        {
+            if (La_d == null)
+            {
+                La_d = new Latast_data();
+            }
+            return La_d;
+        }
+    }
+
+
 
     public partial class MainWindow : Window
     {
@@ -129,63 +162,43 @@ namespace _3c_tcp
         void CheckString(string strRecv)
         {
             printLine("Receive:" + strRecv);
+            String Environment_Value= @"<T(\-|\+)?\d+(\.\d+)?H(\-|\+)?\d+(\.\d+)?C(\-|\+)?\d+(\.\d+)?L(\-|\+)?\d+(\.\d+)?S(\-|\+)?\d+(\.\d+)?>";
+
             string Distance_Value= @"%Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?Dis(\-|\+)?\d+(\.\d+)?%";
             string Direction_Value = @"%XYZ(\-|\+)?\d+(\.\d+)?XYZ(\-|\+)?\d+(\.\d+)?XYZ(\-|\+)?\d+(\.\d+)?%";
-            //String Lider_Value = @"[(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?,(\-|\+)?\d+(\.\d+)?]";
-            String Lidar_Value = @"D(\-|\+)?\d+(\.\d+)?A(\-|\+)?\d+(\.\d+)?";
-            String []lidar_layer=strRecv.Split(new char[2] { '[', ':' });
-            if (lidar_layer.Length > 2)
-            {
 
-                int i = Convert.ToInt32(lidar_layer[1]);
-                String []lidar_data=lidar_layer[2].Split(',');
-                for (int j = 0; j < 60; j++)
-                    sl.Point_list[i * 60 + j] = Convert.ToDouble(lidar_data[j]);
-            }
-            Regex r = new Regex(Lidar_Value,RegexOptions.IgnoreCase);
-            Match m=r.Match(strRecv);
-            while(m.Success){
-                //for(int i=0;i<m.Groups.Count;i++){
-                String Str_group = m.Groups.SyncRoot.ToString();
-                if (Regex.IsMatch(Str_group,Lidar_Value))
-                {
-                    
-                    printLine("雷达数据：" + Str_group);
-                    String[] s = Str_group.Split(new char[2] { 'D', 'A' });
-                    sl.Point_list[(int)Convert.ToDouble(s[2])] = Convert.ToDouble(s[1]);
-                    return;
+            if (Regex.IsMatch(strRecv, Environment_Value)){
+                String str1 = strRecv.Split(new char[2] { '<', '>' })[1];
+                String[] data = str1.Split(new char[5] { 'T', 'H', 'C', 'L','S'});
+                for (int i = 0; i < data.Length; i++) {
+                    printLine(data[i]);
                 }
-                //}
-                
-            }
-            if (Regex.IsMatch(strRecv, Distance_Value))
-            {
-                printLine("距离值");
-                string str1 = strRecv.Split(new char[2] { '%', '%' })[1];
-                string[] str2 = str1.Split(new string[1] { "Dis" }, StringSplitOptions.None);
-                double[] dir = new double[8];
-                for (int i = 1; i < str2.Length; i++)
-                {
-                    dir[i - 1] = Convert.ToDouble(str2[i])+10;
-                    if (dir[i - 1] ==-1)
-                    {
-                        dir[i - 1] = 25;
-                    }
-                    else if (dir[i - 1] == -2)
-                    {
-                        dir[i - 1] = 160;
-                    }
-                }
-                f1.position = dir;
-                //f1.Refresh();
-                Direction di = new Direction(dir, 100);
 
-                double[] go = di.getDir();
-                //for (int i = 0; i < 5; i++)
-                //{
-                //    sendStringtoClient("%" + (int)(go[0]*10) + "%" + (int)(go[1]*10) + "%");
-                //}
-                //printLine(Convert.ToString(go[0]+"_and_"+go[1]));
+                //记录插入到数据库中
+                Env_Data E_Data = new Env_Data()
+                {
+                    WiFi_Name_ = "No.1",
+                    DataTime_ =         DateTime.Now,
+                    Temperature_ =      Convert.ToDouble(data[1]),
+                    Humi_ =             Convert.ToDouble(data[2]),
+                    CO2_ =              Convert.ToDouble(data[3]),
+                    light =             Convert.ToDouble(data[4]),
+                    smokescope_=        Convert.ToDouble(data[5])
+                };
+                Environment_dataDataContext sql_env = Sql_Environment.Create_Environment_SqlData();
+                sql_env.Env_Data.InsertOnSubmit(E_Data);
+                sql_env.SubmitChanges();
+
+                //跟新单例莫斯的数据
+                Latast_data latast_da = Latast_data.getSingleon();
+                latast_da.Temperature = Convert.ToDouble(data[1]);
+                latast_da.Humi = Convert.ToDouble(data[2]);
+                latast_da.CO2 = Convert.ToDouble(data[3]);
+                latast_da.Light = Convert.ToDouble(data[4]);
+                latast_da.smokescope = Convert.ToDouble(data[5]);
+                latast_da.datatime = DateTime.Now.ToString();
+
+                           
             }
             else if (Regex.IsMatch(strRecv, Direction_Value))
             {
@@ -324,9 +337,11 @@ namespace _3c_tcp
         }
         private void show_Direction(object sender, RoutedEventArgs e)
         {
-           
-            f1.Show();
+
+            //f1.Show();
             //sl.Show();
+            MainContent m = new MainContent();
+            m.Show();
 
         }
 

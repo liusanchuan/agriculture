@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DigitalAgritureCulture" Class="Environment_dataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-4FA6J2C\SQLEXPRESS;Initial Catalog=DigitalAgritureCulture;Integrated Security=True" SettingsObjectName="_3c_tcp.Properties.Settings" SettingsPropertyName="DigitalAgritureCultureConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Env_Data" Member="Env_Data">
+    <Type Name="Env_Data">
+      <Column Name="Id_" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WiFi_Name_" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="DataTime_" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="Temperature_" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humi_" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CO2_" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="smokescope_" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="light" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
