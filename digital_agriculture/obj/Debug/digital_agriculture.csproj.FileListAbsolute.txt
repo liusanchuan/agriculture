@@ -1,1 +1,9 @@
 G:\Program\digital_agriculture\digital_agriculture\bin\Debug\digital_agriculture.exe.config
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\bin\Debug\digital_agriculture.exe.config
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\bin\Debug\digital_agriculture.exe
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\bin\Debug\digital_agriculture.pdb
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\obj\Debug\digital_agriculture.csprojResolveAssemblyReference.cache
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\obj\Debug\digital_agriculture.Properties.Resources.resources
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\obj\Debug\digital_agriculture.csproj.GenerateResource.Cache
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\obj\Debug\digital_agriculture.exe
+E:\硕士实验室\毕设\我的文档\3c_tcp\digital_agriculture\obj\Debug\digital_agriculture.pdb

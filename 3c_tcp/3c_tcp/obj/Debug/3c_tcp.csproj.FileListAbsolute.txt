@@ -126,3 +126,4 @@ E:\硕士实验室\毕设\我的文档\3c_tcp\3c_tcp\3c_tcp\obj\Debug\_3c_tcp.Sh
 E:\硕士实验室\毕设\我的文档\3c_tcp\3c_tcp\3c_tcp\obj\Debug\3c_tcp.csproj.GenerateResource.Cache
 E:\硕士实验室\毕设\我的文档\3c_tcp\3c_tcp\3c_tcp\obj\Debug\_3c_tcp.EnvironmentTracking.resources
 E:\硕士实验室\毕设\我的文档\3c_tcp\3c_tcp\3c_tcp\obj\Debug\_3c_tcp.MainContent.resources
+E:\硕士实验室\毕设\我的文档\3c_tcp\3c_tcp\3c_tcp\obj\Debug\_3c_tcp.Data_exhibition.resources
